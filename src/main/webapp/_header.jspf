@@ -1,0 +1,201 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title><c:out value="${pageTitle != null ? pageTitle : 'App'}"/></title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #111827;
+            --muted: #94a3b8;
+            --text: #e5e7eb;
+            --brand: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        a {
+            color: #93c5fd;
+            text-decoration: none
+        }
+
+        a:hover {
+            text-decoration: underline
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px
+        }
+
+        .nav {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 16px 24px;
+            background: #0b1220;
+            border-bottom: 1px solid #1f2937
+        }
+
+        .nav .left {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex: 1
+        }
+
+        .nav .brand {
+            font-weight: 700;
+            color: var(--brand)
+        }
+
+        .nav .right {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: #1f2937;
+            color: var(--text);
+            border: 1px solid #334155;
+            cursor: pointer
+        }
+
+        .btn:hover {
+            background: #111827
+        }
+
+        .btn.primary {
+            background: var(--brand);
+            color: #052e16;
+            border-color: #16a34a
+        }
+
+        .btn.danger {
+            background: transparent;
+            color: #fecaca;
+            border-color: var(--danger)
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 18px
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px
+        }
+
+        .grid.cols-2 {
+            grid-template-columns:repeat(2, minmax(0, 1fr))
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px
+        }
+
+        .table th, .table td {
+            border-bottom: 1px solid #1f2937;
+            padding: 10px;
+            text-align: left
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+            margin-bottom: 14px
+        }
+
+        .field input, .field textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #0b1220;
+            color: var(--text);
+            border: 1px solid #334155
+        }
+
+        .field input:focus, .field textarea:focus {
+            outline: 2px solid #2563eb
+        }
+
+        .errors {
+            background: #1f2937;
+            border: 1px solid #4b5563;
+            color: #fecaca;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 14px
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 4px 8px;
+            background: #0b1220;
+            border: 1px solid #334155;
+            border-radius: 999px
+        }
+
+        footer {
+            padding: 24px;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .right form {
+            display: inline
+        }
+    </style>
+</head>
+<body>
+<nav class="nav">
+    <div class="left">
+        <a class="brand" href="${pageContext.request.contextPath}/products">HaiShelby</a>
+        <a href="${pageContext.request.contextPath}/products">Products</a>
+        <a href="${pageContext.request.contextPath}/profile">Profile</a>
+    </div>
+    <div class="right">
+        <c:choose>
+            <c:when test="${not empty sessionScope.user}">
+                <span class="tag">Hello, <c:out
+                        value="${sessionScope.user.fullName != null ? sessionScope.user.fullName : 'User'}"/></span>
+                <form method="post" action="${pageContext.request.contextPath}/auth/logout">
+                    <button class="btn danger" type="submit">Logout</button>
+                </form>
+            </c:when>
+            <c:otherwise>
+                <a class="btn" href="${pageContext.request.contextPath}/login.jsp">Login</a>
+                <a class="btn" href="${pageContext.request.contextPath}/auth/register">Register</a>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</nav>
+<main class="container">
